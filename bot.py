@@ -30,8 +30,8 @@ def make_forcast(resp: dict) -> str:
         "Hi there!\n\n"
         "Here is your daily weather update for Les Deux Alpes. Currently, the temperature "
         f"ranges from {temp_base}°C at the base of the mountain to {temp_top}°C at the top. "
-        f"There will be {fresh_snow:.0f}cm of fresh fresh_snow today and {snow_fall}mm of snow fall.\n\n"
-        f"It is only {days} left! ⛷🏂"
+        f"There will be {fresh_snow:.0f}cm of fresh fresh GNARLY POWDAH today and {snow_fall}mm of snow fall.\n\n"
+        f"It is only {days} days left! ⛷🏂"
     )
     return msg
 
