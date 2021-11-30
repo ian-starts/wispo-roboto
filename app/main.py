@@ -20,7 +20,8 @@ def message_stuff():
         joke = get_joke()
         send_message(bot, joke, request_data["message"]["chat"]["id"])
     if 'mountainview' in request_data['message']['text']:
-        send_image(bot, get_mountain_image() ,request_data['message']['chat']['id'])
+        mountain_image_data = get_mountain_image()
+        send_image(bot, mountain_image_data["medias"][0]["urls"]["large"], request_data['message']['chat']['id'], mountain_image_data["medias"][0]["date"])
     return Response("", status=202, mimetype='application/json')
 
 
@@ -33,10 +34,10 @@ def get_mountain_image():
         }
     resp = requests.post(
         "https://api.skaping.com//media/search",data=request_data).json()
-    return resp["medias"][0]["urls"]["large"]
+    return resp
 
 def send_message(bot: telegram.Bot, msg: str, chat_id: int):
     bot.send_message(text=msg, chat_id=chat_id)
 
-def send_image(bot: telegram.Bot, photo: str, chat_id: int):
-    bot.send_photo(chat_id=chat_id, photo=photo)
+def send_image(bot: telegram.Bot, photo: str, chat_id: int, caption: str):
+    bot.send_photo(chat_id=chat_id, photo=photo, caption=caption)
