@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request, Response
 import requests
 import telegram
 
@@ -14,8 +14,10 @@ RESORT_ID = 333010
 def message_stuff():
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     request_data = request.get_json()
+    print(request_data)
     if ('lol' in request_data['message']['text']):
         send_message(bot, "lol to you, nerd!",request_data['message']['chat']['id'])
+    return Response("", status=202, mimetype='application/json')
 
 
 def send_message(bot: telegram.Bot, msg: str, chat_id: int):
