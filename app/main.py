@@ -1,26 +1,29 @@
-from datetime import date
 from flask import Flask,request, Response
 import requests
 import telegram
+from app.joke import get_joke
 
 app = Flask(__name__)
 
 TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
- 
-@app.route("/message", methods=['post'])
+
+
+@app.route("/message", methods=["post"])
 def message_stuff():
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     request_data = request.get_json()
     print(request_data)
-    if ('lol' in request_data['message']['text']):
+    if 'lol' in request_data['message']['text']:
         send_message(bot, "lol to you, nerd!",request_data['message']['chat']['id'])
-    if ('mountainview' in request_data['message']['text']):
+    if "joke" in request_data["message"]["text"]:
+        joke = get_joke()
+        send_message(bot, joke, request_data["message"]["chat"]["id"])
+    if 'mountainview' in request_data['message']['text']:
         send_image(bot, get_mountain_image() ,request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
 
 
 def get_mountain_image():
-    today = date.today()
     request_data = {
             'types': 'image',
             'api_key': 'wJYTf-gyLNX-tk7ll-cGviT',
