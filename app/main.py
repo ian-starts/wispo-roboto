@@ -1,19 +1,24 @@
-from flask import Flask,request, Response
+from flask import Flask, request, Response
 import requests
 import telegram
+from app.joke import get_joke
 
 app = Flask(__name__)
 
 TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
- 
-@app.route("/message", methods=['post'])
+
+
+@app.route("/message", methods=["post"])
 def message_stuff():
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     request_data = request.get_json()
     print(request_data)
-    if ('lol' in request_data['message']['text']):
-        send_message(bot, "lol to you, nerd!",request_data['message']['chat']['id'])
-    return Response("", status=202, mimetype='application/json')
+    if "lol" in request_data["message"]["text"]:
+        send_message(bot, "lol to you, nerd!", request_data["message"]["chat"]["id"])
+    elif "joke" in request_data["message"]["text"]:
+        joke = get_joke()
+        send_message(bot, joke, request_data["message"]["chat"]["id"])
+    return Response("", status=202, mimetype="application/json")
 
 
 def send_message(bot: telegram.Bot, msg: str, chat_id: int):
