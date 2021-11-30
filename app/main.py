@@ -1,4 +1,5 @@
 from flask import Flask,request, Response
+from datetime import date
 import requests
 import telegram
 from app.joke import get_joke
