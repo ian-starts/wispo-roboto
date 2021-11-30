@@ -13,4 +13,4 @@ def get_joke():
     title = response["contents"]["jokes"][0]["joke"]["title"]
     text = response["contents"]["jokes"][0]["joke"]["text"]
 
-    return f"<b>{title}</b>\n{text}\n🤣🤣🤣"
+    return f"{title}\n\n{text}\n🤣🤣🤣"
