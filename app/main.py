@@ -32,7 +32,7 @@ def get_mountain_image():
             'count' : 1
         }
     resp = requests.post(
-        "https://api.skaping.com//media/search",data=request_data)
+        "https://api.skaping.com//media/search",data=request_data).json()
     return resp["medias"][0]["urls"]["large"]
 
 def send_message(bot: telegram.Bot, msg: str, chat_id: int):
