@@ -1,5 +1,5 @@
 from flask import Flask,request, Response
-from datetime import date
+from datetime import date, timedelta
 import requests
 import telegram
 from app.joke import get_joke
@@ -28,7 +28,7 @@ def get_mountain_image():
     request_data = {
             'types': 'image',
             'api_key': 'wJYTf-gyLNX-tk7ll-cGviT',
-            'center': (date.today() + date.timedelta(days=1)).strftime('%Y-%m-%d'),
+            'center': (date.today() + timedelta(days=1)).strftime('%Y-%m-%d'),
             'count' : 1
         }
     resp = requests.post(
