@@ -36,7 +36,7 @@ def make_forcast(resp: dict) -> str:
 
     if (days - 30) <= 5 and (days-30) > 0:
         msg += 2*"\n"
-        msg += f"❗️❗️HEADS-Up❗️❗️ The cancelation fee will be raised in {days-30} days!"
+        msg += f"❗️❗️HEADS-UP❗️❗️ The cancelation fee will be raised in {days-30} days!"
 
     return msg
 
