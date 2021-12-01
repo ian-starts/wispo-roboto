@@ -28,11 +28,16 @@ def make_forcast(resp: dict) -> str:
     days = (date(2022, 1, 14) - date.today()).days
     msg = (
         "Hi there!\n\n"
-        "Here is your daily weather update for Les Deux Alpes. Currently, the temperature "
+        "Here is your daily weather update for Les Deux Alpes. Todays forecast is  Currently, the temperature "
         f"ranges from {temp_base}°C at the base of the mountain to {temp_top}°C at the top. "
         f"There will be {fresh_snow:.0f}cm of fresh fresh GNARLY POWDAH today and {snow_fall}mm of snow fall.\n\n"
         f"It is only {days} days left! ⛷🏂"
     )
+
+    if (days - 30) <= 5 and (days-30) > 0:
+        msg += 2*"\n"
+        msg += f"❗️❗️HEADS-Up❗️❗️ The cancelation fee will be raised in {days-30} days!"
+
     return msg
 
 
