@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import requests
 import telegram
 from app.joke import get_joke
-from app.amy import get_manly, get_name, get_rng
+from app.amy import get_manly, get_name, get_rng, get_location
 
 app = Flask(__name__)
 
@@ -33,6 +33,9 @@ def message_stuff():
     elif "size" in request_data['message']['text']:
         size = get_manly()
         send_message(bot, size,request_data['message']['chat']['id'])
+    elif "dist" in request_data['message']['text']:
+        distance = get_location(request_data['message']['text'])
+        send_message(bot, distance,request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
 
 
