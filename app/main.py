@@ -3,6 +3,7 @@ from datetime import date, timedelta
 import requests
 import telegram
 from app.joke import get_joke
+from app.amy import get_manly, get_name, get_rng
 
 app = Flask(__name__)
 
@@ -16,12 +17,22 @@ def message_stuff():
     print(request_data)
     if 'lol' in request_data['message']['text']:
         send_message(bot, "lol to you, nerd!",request_data['message']['chat']['id'])
-    if "joke" in request_data["message"]["text"]:
+    elif "joke" in request_data["message"]["text"]:
         joke = get_joke()
         send_message(bot, joke, request_data["message"]["chat"]["id"])
-    if 'mountainview' in request_data['message']['text']:
+    elif 'mountainview' in request_data['message']['text']:
         mountain_image_data = get_mountain_image()
         send_image(bot, mountain_image_data["medias"][0]["urls"]["large"], request_data['message']['chat']['id'], mountain_image_data["medias"][0]["date"])
+    elif "rng" in request_data['message']['text']:
+        number = get_rng(request_data['message']['text'])
+        send_message(bot, number, request_data["message"]["chat"]["id"])
+    elif "dishes" in request_data['message']['text']:
+        name = get_name()
+        text = "Today, " + name + " will be doing the dishes!! LOL loser 😙" 
+        send_message(bot, text, request_data["message"]["chat"]["id"])
+    elif "size" in request_data['message']['text']:
+        size = get_manly()
+        send_message(bot, size,request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
 
 
