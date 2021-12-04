@@ -56,7 +56,7 @@ def get_location(message_text):
         route_data = route_req.json()
         travel_time = route_data["routes"][0]["sections"][0]["summary"]["duration"] / 3600
         travel_distance = route_data["routes"][0]["sections"][0]["summary"]["length"] / 1000
-        return "You are " + str(round(travel_time)) + " hours and " + str(
+        return "You are " + str(round(travel_time, 2)) + " hours and " + str(
             round(travel_distance)) + " kilometers away by car from your WISPO destination: Les Deux Alpes ⛷️🏂"
 
     except:
