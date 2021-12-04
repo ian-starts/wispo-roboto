@@ -38,7 +38,6 @@ def get_location(message_text):
     except:
         return "You did not enter your text correctly. Format /dist{location} e.g. Rotterdam"
 
-
     try:
         URL = "https://geocode.search.hereapi.com/v1/geocode"
         api_key = 'RZqtJDEQfbtfuH67lyK2IBrh7V41IdSN3WNd5pnSrLs'  # Acquire from developer.here.com
@@ -49,11 +48,16 @@ def get_location(message_text):
 
         latitude = data['items'][0]['position']['lat']
         longitude = data['items'][0]['position']['lng']
-        coords_1 = (latitude, longitude)
-        coords_2 = (45.01331, 6.12471)  # coord les deux alpes
 
-        return "You are " + str(round(geopy.distance.distance(coords_1,
-                                                                coords_2).km)) + " kilometers away from your WISPO destination: Les Deux Alpes ⛷️🏂"
+        car_route_url = "https://router.hereapi.com/v8/routes"
+        car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{latitude},{longitude}",
+                            'destination': '45.01331, 6.12471', 'return': 'summary'}
+        route_req = requests.get(url=car_route_url, params=car_route_params)
+        route_data = route_req.json()
+        travel_time = route_data["routes"][0]["sections"][0]["summary"]["duration"] / 3600
+        travel_distance = route_data["routes"][0]["sections"][0]["summary"]["length"] / 1000
+        return "You are " + str(round(travel_time)) + " hours and " + str(
+            round(travel_distance)) + " kilometers away by car from your WISPO destination: Les Deux Alpes ⛷️🏂"
 
     except:
         return "You did not enter a existing location. Format /dist{location} e.g. Rotterdam"
