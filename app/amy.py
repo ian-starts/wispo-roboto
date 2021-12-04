@@ -7,12 +7,12 @@ import geopy.distance
 names = ["Joost", "Yoni", "Rutger", "AmyO", "AmyL", "Thijs", "Joshiwa", "Lenne"]
 
 
-def get_rng(input):
-    if input == "rng":
+def get_rng(message_text):
+    if message_text == "rng":
         output = "please use this function as follows: rng{number}, for the random number generator"
-    elif "rng" in input:
+    elif "rng" in message_text:
         try:
-            new = re.findall(r'rng(\w+)', input)[0]
+            new = re.findall(r'rng(\w+)', message_text)[0]
             components = re.split('(\d+)', new)
             output = "The magic number is : " + str(
                 random.randint(1, [int(word) for word in components if word.isdigit()][0]))
@@ -32,11 +32,12 @@ def get_manly():
     return ("8" + nmb * '=' + "D")
 
 
-def get_location(input):
+def get_location(message_text):
     try:
-        location = re.findall(r'dist(\w+)', input)[0]
+        location = re.findall(r'dist(\w+)', message_text)[0]
     except:
-        output = "You did not enter your text correctly. Format /dist{location} e.g. Rotterdam"
+        return "You did not enter your text correctly. Format /dist{location} e.g. Rotterdam"
+
 
     try:
         URL = "https://geocode.search.hereapi.com/v1/geocode"
@@ -51,10 +52,8 @@ def get_location(input):
         coords_1 = (latitude, longitude)
         coords_2 = (45.01331, 6.12471)  # coord les deux alpes
 
-        output = "You are " + str(round(geopy.distance.distance(coords_1,
+        return "You are " + str(round(geopy.distance.distance(coords_1,
                                                                 coords_2).km)) + " kilometers away from your WISPO destination: Les Deux Alpes ⛷️🏂"
 
     except:
-        output = "You did not enter a existing location. Format /dist{location} e.g. Rotterdam"
-
-    return output
+        return "You did not enter a existing location. Format /dist{location} e.g. Rotterdam"
