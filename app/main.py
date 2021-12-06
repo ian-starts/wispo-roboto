@@ -19,7 +19,7 @@ def message_stuff():
     try:
         set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
                      request_data['message']['location']['longitude'])
-        return
+        return Response("", status=202, mimetype='application/json')
     except KeyError:
         pass
     if 'lol' in request_data['message']['text']:
