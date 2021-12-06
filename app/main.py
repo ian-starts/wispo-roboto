@@ -20,7 +20,7 @@ def message_stuff():
         set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
                      request_data['message']['location']['longitude'])
         return
-    except IndexError:
+    except KeyError:
         pass
     if 'lol' in request_data['message']['text']:
         send_message(bot, "lol to you, nerd!", request_data['message']['chat']['id'])
