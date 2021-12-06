@@ -13,8 +13,10 @@ TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
 
 @app.route("/message", methods=["post"])
 def message_stuff():
-    bot = telegram.Bot(token=TELEGRAM_API_KEY)
     request_data = request.get_json()
+    if not request_data['message']['text'].startswith("/"):
+        return Response("", status=202, mimetype='application/json')
+    bot = telegram.Bot(token=TELEGRAM_API_KEY)
     print(request_data)
     try:
         set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
