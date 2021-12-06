@@ -2,6 +2,7 @@ import re
 import random
 import requests
 import geopy.distance
+from app.wispo_redis import get_location as get_redis_location
 
 # Je kan de namen niet opvragen in de Telegram API :(((
 names = ["Joost", "Yoni", "Rutger", "AmyO", "AmyL", "Thijs", "Joshiwa", "Lenne"]
@@ -32,25 +33,14 @@ def get_manly():
     return ("8" + nmb * '=' + "D")
 
 
-def get_location(message_text):
+def get_location(user_id):
     try:
-        location = re.findall(r'dist(\w+)', message_text)[0]
-    except:
-        return "You did not enter your text correctly. Format /dist{location} e.g. Rotterdam"
 
-    try:
-        URL = "https://geocode.search.hereapi.com/v1/geocode"
-        api_key = 'fY6o1AeYGyi55iMzO9q_A1EPhcuawutvHKJSQ6Mx4dY'  # Acquire from developer.here.com
-        PARAMS = {'apikey': api_key, 'q': location}
-
-        r = requests.get(url=URL, params=PARAMS)
-        data = r.json()
-
-        latitude = data['items'][0]['position']['lat']
-        longitude = data['items'][0]['position']['lng']
+        api_key = 'fY6o1AeYGyi55iMzO9q_A1EPhcuawutvHKJSQ6Mx4dY'
+        location = get_redis_location(user_id)
 
         car_route_url = "https://router.hereapi.com/v8/routes"
-        car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{latitude},{longitude}",
+        car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{location['lat']},{location['long']}",
                             'destination': '45.01331, 6.12471', 'return': 'summary'}
         route_req = requests.get(url=car_route_url, params=car_route_params)
         route_data = route_req.json()

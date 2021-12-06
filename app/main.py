@@ -40,7 +40,7 @@ def message_stuff():
         size = get_manly()
         send_message(bot, size, request_data['message']['chat']['id'])
     elif "dist" in request_data['message']['text']:
-        distance = get_location(request_data['message']['text'])
+        distance = get_location(request_data['message']['from']['id'])
         send_message(bot, distance, request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
 
