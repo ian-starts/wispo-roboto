@@ -3,6 +3,7 @@ from datetime import date, timedelta
 import requests
 import telegram
 from app.joke import get_joke
+from app.wispo_redis import set_location
 from app.amy import get_manly, get_name, get_rng, get_location
 
 app = Flask(__name__)
@@ -15,6 +16,10 @@ def message_stuff():
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     request_data = request.get_json()
     print(request_data)
+    if request_data['message']['location']:
+        set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
+                     request_data['message']['location']['longitude'])
+        return
     if 'lol' in request_data['message']['text']:
         send_message(bot, "lol to you, nerd!", request_data['message']['chat']['id'])
     elif "joke" in request_data["message"]["text"]:

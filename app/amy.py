@@ -40,7 +40,7 @@ def get_location(message_text):
 
     try:
         URL = "https://geocode.search.hereapi.com/v1/geocode"
-        api_key = 'RZqtJDEQfbtfuH67lyK2IBrh7V41IdSN3WNd5pnSrLs'  # Acquire from developer.here.com
+        api_key = 'fY6o1AeYGyi55iMzO9q_A1EPhcuawutvHKJSQ6Mx4dY'  # Acquire from developer.here.com
         PARAMS = {'apikey': api_key, 'q': location}
 
         r = requests.get(url=URL, params=PARAMS)
