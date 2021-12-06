@@ -37,7 +37,10 @@ def get_location(user_id):
     try:
 
         api_key = 'fY6o1AeYGyi55iMzO9q_A1EPhcuawutvHKJSQ6Mx4dY'
-        location = get_redis_location(user_id)
+        try:
+            location = get_redis_location(user_id)
+        except:
+            return "You did not share a location, please let me know where ya's at"
 
         car_route_url = "https://router.hereapi.com/v8/routes"
         car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{location['lat']},{location['long']}",
