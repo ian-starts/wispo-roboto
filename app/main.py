@@ -15,6 +15,8 @@ TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
 @app.route("/message", methods=["post"])
 def message_stuff():
     request_data = request.get_json()
+    request_data['message'] = get_message_or_update(request_data)
+
     # check if the message has a location
     if key_exists(request_data, 'location'):
         set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
@@ -71,3 +73,12 @@ def send_message(bot: telegram.Bot, msg: str, chat_id: int):
 
 def send_image(bot: telegram.Bot, photo: str, chat_id: int, caption: str):
     bot.send_photo(chat_id=chat_id, photo=photo, caption=caption)
+
+
+def get_message_or_update(update):
+    message = None
+    if key_exists(update, 'edited_message'):
+        message = update['edited_message']
+    else:
+        message = update['message']
+    return message
