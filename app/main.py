@@ -5,6 +5,7 @@ import telegram
 from app.joke import get_joke
 from app.wispo_redis import set_location
 from app.amy import get_manly, get_name, get_rng, get_location
+from app.array_extensions import key_exists
 
 app = Flask(__name__)
 
@@ -14,16 +15,19 @@ TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
 @app.route("/message", methods=["post"])
 def message_stuff():
     request_data = request.get_json()
+    # check if the message has a location
+    if key_exists(request_data, 'location'):
+        set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
+                     request_data['message']['location']['longitude'])
+        return Response("", status=202, mimetype='application/json')
+
+    # if not, check if it's a command
     if not request_data['message']['text'].startswith("/"):
         return Response("", status=202, mimetype='application/json')
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     print(request_data)
-    try:
-        set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
-                     request_data['message']['location']['longitude'])
-        return Response("", status=202, mimetype='application/json')
-    except KeyError:
-        pass
+
+    # Do commands
     if 'lol' in request_data['message']['text']:
         send_message(bot, "lol to you, nerd!", request_data['message']['chat']['id'])
     elif "joke" in request_data["message"]["text"]:
