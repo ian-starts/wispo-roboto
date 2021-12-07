@@ -10,7 +10,7 @@ r = redis.Redis(host=url.hostname, port=url.port, username=url.username, passwor
 
 
 def set_location(user_id, lat, long):
-    r.set(user_id, json.dumps({'lat': lat, 'lon': long}))
+    r.set(user_id, json.dumps({'lat': lat, 'lon': long}), ex=3600*24)
 
 
 def get_location(user_id):
