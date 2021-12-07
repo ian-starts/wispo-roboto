@@ -18,7 +18,7 @@ def message_stuff():
     request_data['message'] = get_message_or_update(request_data)
 
     # check if the message has a location
-    if key_exists(request_data, 'location'):
+    if key_exists(request_data['message'], 'location'):
         set_location(request_data['message']['from']['id'], request_data['message']['location']['latitude'],
                      request_data['message']['location']['longitude'])
         return Response("", status=202, mimetype='application/json')
