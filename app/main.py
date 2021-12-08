@@ -28,7 +28,6 @@ def message_stuff():
     if not key_exists(request_data['message'], 'text') or not request_data['message']['text'].startswith("/"):
         return Response("", status=202, mimetype='application/json')
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
-    print(request_data)
 
     # Do commands
     if 'lol' in request_data['message']['text']:
