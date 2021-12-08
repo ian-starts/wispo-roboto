@@ -24,7 +24,7 @@ def message_stuff():
         return Response("", status=202, mimetype='application/json')
 
     # if not, check if it's a command
-    if not request_data['message']['text'].startswith("/"):
+    if not key_exists(request_data['message'], 'message') or not request_data['message']['text'].startswith("/"):
         return Response("", status=202, mimetype='application/json')
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     print(request_data)
