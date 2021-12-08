@@ -15,6 +15,7 @@ TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
 @app.route("/message", methods=["post"])
 def message_stuff():
     request_data = request.get_json()
+    print(request_data)
     request_data['message'] = get_message_or_update(request_data)
 
     # check if the message has a location
@@ -24,7 +25,7 @@ def message_stuff():
         return Response("", status=202, mimetype='application/json')
 
     # if not, check if it's a command
-    if not key_exists(request_data['message'], 'message') or not request_data['message']['text'].startswith("/"):
+    if not key_exists(request_data['message'], 'text') or not request_data['message']['text'].startswith("/"):
         return Response("", status=202, mimetype='application/json')
     bot = telegram.Bot(token=TELEGRAM_API_KEY)
     print(request_data)
