@@ -52,11 +52,11 @@ def message_stuff():
     elif "dist" in request_data['message']['text']:
         distance = get_location(request_data['message']['from']['id'])
         send_message(bot, distance, request_data['message']['chat']['id'])
-    elif "address" in request_data['message']['text']:
-        msg = get_address()
-        send_message(bot, msg, request_data['message']['chat']['id'])
     elif "addresshotel" in request_data['message']['text']:
         msg = get_addresshotel()
+        send_message(bot, msg, request_data['message']['chat']['id'])
+    elif "address" in request_data['message']['text']:
+        msg = get_address()
         send_message(bot, msg, request_data['message']['chat']['id'])
     elif "flip" in request_data['message']['text']:
         msg = get_flip()
@@ -65,8 +65,7 @@ def message_stuff():
         msg = get_back()
         send_message(bot, msg, request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
-
-
+    
 def get_mountain_image():
     request_data = {
         'types': 'image',
