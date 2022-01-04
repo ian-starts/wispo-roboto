@@ -4,7 +4,7 @@ import requests
 import telegram
 from app.joke import get_joke
 from app.wispo_redis import set_location
-from app.amy import get_manly, get_name, get_rng, get_location
+from app.amy import get_manly, get_name, get_rng, get_location, get_address, get_flip, get_back
 from app.array_extensions import key_exists
 
 app = Flask(__name__)
@@ -46,12 +46,21 @@ def message_stuff():
         name = get_name()
         text = "Today, " + name + " will be doing the dishes!! LOL loser 😙"
         send_message(bot, text, request_data["message"]["chat"]["id"])
-    elif "size" in request_data['message']['text']:
+    elif "manly" in request_data['message']['text']:
         size = get_manly()
         send_message(bot, size, request_data['message']['chat']['id'])
     elif "dist" in request_data['message']['text']:
         distance = get_location(request_data['message']['from']['id'])
         send_message(bot, distance, request_data['message']['chat']['id'])
+    elif "address" in request_data['message']['text']:
+        msg = get_address()
+        send_message(bot, msg, request_data['message']['chat']['id'])
+    elif "flip" in request_data['message']['text']:
+        msg = get_flip()
+        send_message(bot, msg, request_data['message']['chat']['id'])
+    elif "back" in request_data['message']['text']:
+        msg = get_back()
+        send_message(bot, msg, request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
 
 

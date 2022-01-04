@@ -5,7 +5,7 @@ import geopy.distance
 from app.wispo_redis import get_location as get_redis_location
 
 # Je kan de namen niet opvragen in de Telegram API :(((
-names = ["Joost", "Yoni", "Rutger", "AmyO", "AmyL", "Thijs", "Joshiwa", "Lenne"]
+names = ["Joost", "Yoni", "Rutger", "AmyO", "AmyL", "Thijs", "Joshiwa"]
 
 
 def get_rng(message_text):
@@ -32,6 +32,11 @@ def get_manly():
     nmb = random.randint(1, 30)
     return ("8" + nmb * '=' + "D")
 
+def get_flip():
+    return '(╯°□°)╯︵ ┻━┻'
+
+def get_back():
+    return '┬─┬ノ( º _ ºノ)'
 
 def get_location(user_id):
     try:
@@ -48,3 +53,11 @@ def get_location(user_id):
             round(travel_distance)) + " kilometers away by car from your WISPO destination: Les Deux Alpes ⛷️🏂"
     except:
         return "Something went fucky, did you share your location with me?"
+
+def get_address():
+    msg = "Chalet Alpina, Place de Venosc, 38860 Les Deux Alpes - France"
+    return msg
+
+def get_packlist():
+    #TO DO
+    return None
