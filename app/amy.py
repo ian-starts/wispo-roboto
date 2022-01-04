@@ -58,6 +58,10 @@ def get_address():
     msg = "Chalet Alpina, Place de Venosc, 38860 Les Deux Alpes - France"
     return msg
 
+def get_addresshotel():
+    msg = "4 Allee Du Chanoine Drioton, Nancy, 54000, France"
+    return msg
+
 def get_packlist():
     #TO DO
     return None
