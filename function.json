@@ -2,7 +2,7 @@
   "scriptFile": "bot.py",
   "bindings": [
     {
-      "name": "mytimer",
+      "name": "TimedWispo",
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "0 0 12 * * 1-5"
