@@ -1,0 +1,11 @@
+{
+  "scriptFile": "bot.py",
+  "bindings": [
+    {
+      "name": "mytimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 12 * * 1-5"
+    }
+  ]
+}
