@@ -5,7 +5,7 @@ import geopy.distance
 from app.wispo_redis import get_location as get_redis_location
 
 # Je kan de namen niet opvragen in de Telegram API :(((
-names = ["Joost", "Yoni", "Rutger", "AmyO", "AmyL", "Thijs", "Joshiwa"]
+names = ["Amy", "Yoni", "Rutger", "Irene", "Tijs"]
 
 
 def get_rng(message_text):
