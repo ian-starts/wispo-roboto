@@ -128,3 +128,40 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea
+bin
+obj
+csx
+.vs
+edge
+Publish
+
+*.user
+*.suo
+*.cscfg
+*.Cache
+project.lock.json
+
+/packages
+/TestResults
+
+/tools/NuGet.exe
+/App_Data
+/secrets
+/data
+.secrets
+appsettings.json
+local.settings.json
+
+node_modules
+dist
+
+# Local python packages
+.python_packages/
+
+
+# Byte-compiled / optimized / DLL files
+
+# Azurite artifacts
+__blobstorage__
+__queuestorage__
+__azurite_db*__.json
