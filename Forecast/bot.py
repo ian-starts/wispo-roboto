@@ -3,6 +3,7 @@ from datetime import date
 import requests
 import telegram
 
+
 # https://developer.weatherunlocked.com/documentation/skiresort/resources#response-fields
 TELEGRAM_API_KEY = "2120742951:AAF308uoeBHAhOASiVlBBNK8VQskGfeVLbY"
 TELEGRAM_CHAT_ID = -509915845
