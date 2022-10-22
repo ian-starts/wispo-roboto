@@ -60,12 +60,10 @@ def get_snow_height(resort_id: int, app_id: int, api_key: str) -> dict:
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
+    logging.info('Python timer trigger function ran')
+    bot = telegram.Bot(token=TELEGRAM_API_KEY)
 
-    if mytimer.past_due:
-        bot = telegram.Bot(token=TELEGRAM_API_KEY)
+    resp = get_snow_height(RESORT_ID, WEATHER_API_ID, WEATHER_API_KEY)
 
-        resp = get_snow_height(RESORT_ID, WEATHER_API_ID, WEATHER_API_KEY)
+    send_message(bot, make_forcast(resp.json()), TELEGRAM_CHAT_ID)
 
-        send_message(bot, make_forcast(resp.json()), TELEGRAM_CHAT_ID)
-
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
