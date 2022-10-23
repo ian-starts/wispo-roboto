@@ -33,6 +33,7 @@ werkzeug = "==2.0.2"
 wrapt = "==1.13.3"
 "zope.interface" = "==5.4.0"
 azure-functions = "*"
+azure-data-tables="*"
 
 [dev-packages]
 
