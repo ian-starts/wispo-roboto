@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import requests
 import telegram
 from app.joke import get_joke
-from app.wispo_redis import set_location
+from app.wispo_storage import set_location
 from app.amy import get_manly, get_name, get_rng, get_location, get_address, get_flip, get_back, get_addresshotel
 from app.array_extensions import key_exists
 

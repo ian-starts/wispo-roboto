@@ -2,7 +2,7 @@ import re
 import random
 import requests
 import geopy.distance
-from app.wispo_redis import get_location as get_redis_location
+from app.wispo_storage import get_location as get_redis_location
 
 # Je kan de namen niet opvragen in de Telegram API :(((
 names = ["Amy", "Yoni", "Rutger", "Irene", "Tijs"]
@@ -44,7 +44,7 @@ def get_location(user_id):
         location = get_redis_location(user_id)
         car_route_url = "https://router.hereapi.com/v8/routes"
         car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{location['lat']},{location['lon']}",
-                            'destination': '45.01331, 6.12471', 'return': 'summary'}
+                            'destination': '47.23179, 11.88093', 'return': 'summary'}
         route_req = requests.get(url=car_route_url, params=car_route_params)
         route_data = route_req.json()
         travel_time = route_data["routes"][0]["sections"][0]["summary"]["duration"] / 3600
