@@ -21,4 +21,4 @@ def set_location(user_id, lat, long):
 
 
 def get_location(user_id):
-    return table_client.get_entity(partition_key="Locations", row_key=user_id)
+    return table_client.get_entity(partition_key="Locations", row_key=str(user_id))

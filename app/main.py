@@ -4,7 +4,8 @@ import requests
 import telegram
 from app.joke import get_joke
 from app.wispo_storage import set_location
-from app.amy import get_manly, get_name, get_rng, get_location, get_address, get_flip, get_back, get_addresshotel
+from app.amy import get_manly, get_name, get_rng, get_travel_distance_message, get_address, get_flip, get_back, \
+    get_addresshotel
 from app.array_extensions import key_exists
 
 app = Flask(__name__)
@@ -50,7 +51,7 @@ def message_stuff():
         size = get_manly()
         send_message(bot, size, request_data['message']['chat']['id'])
     elif "dist" in request_data['message']['text']:
-        distance = get_location(request_data['message']['from']['id'])
+        distance = get_travel_distance_message(request_data['message']['from']['id'])
         send_message(bot, distance, request_data['message']['chat']['id'])
     elif "addresshotel" in request_data['message']['text']:
         msg = get_addresshotel()
@@ -65,7 +66,8 @@ def message_stuff():
         msg = get_back()
         send_message(bot, msg, request_data['message']['chat']['id'])
     return Response("", status=202, mimetype='application/json')
-    
+
+
 def get_mountain_image():
     request_data = {
         'types': 'image',

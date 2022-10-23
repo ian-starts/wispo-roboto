@@ -1,8 +1,7 @@
 import re
 import random
 import requests
-import geopy.distance
-from app.wispo_storage import get_location as get_redis_location
+from app.wispo_storage import get_location
 
 # Je kan de namen niet opvragen in de Telegram API :(((
 names = ["Amy", "Yoni", "Rutger", "Irene", "Tijs"]
@@ -32,36 +31,43 @@ def get_manly():
     nmb = random.randint(1, 30)
     return ("8" + nmb * '=' + "D")
 
+
 def get_flip():
     return '(╯°□°)╯︵ ┻━┻'
+
 
 def get_back():
     return '┬─┬ノ( º _ ºノ)'
 
-def get_location(user_id):
+
+def get_travel_distance_message(user_id):
     try:
         api_key = 'fY6o1AeYGyi55iMzO9q_A1EPhcuawutvHKJSQ6Mx4dY'
-        location = get_redis_location(user_id)
+        location = get_location(user_id)
         car_route_url = "https://router.hereapi.com/v8/routes"
-        car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{location['lat']},{location['lon']}",
+        car_route_params = {'apikey': api_key, 'transportMode': 'car', 'origin': f"{location['Lat']},{location['Long']}",
                             'destination': '47.23179, 11.88093', 'return': 'summary'}
         route_req = requests.get(url=car_route_url, params=car_route_params)
+        print(route_req)
         route_data = route_req.json()
         travel_time = route_data["routes"][0]["sections"][0]["summary"]["duration"] / 3600
         travel_distance = route_data["routes"][0]["sections"][0]["summary"]["length"] / 1000
         return "You are " + str(round(travel_time, 2)) + " hours and " + str(
-            round(travel_distance)) + " kilometers away by car from your WISPO destination: Les Deux Alpes ⛷️🏂"
+            round(travel_distance)) + " kilometers away by car from your WISPO destination: Zell am Ziller ⛷️🏂"
     except:
         return "Something went fucky, did you share your location with me?"
+
 
 def get_address():
     msg = "Chalet Alpina, Place de Venosc, 38860 Les Deux Alpes - France"
     return msg
 
+
 def get_addresshotel():
     msg = "4 Allee Du Chanoine Drioton, Nancy, 54000, France"
     return msg
 
+
 def get_packlist():
-    #TO DO
+    # TO DO
     return None
