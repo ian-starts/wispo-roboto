@@ -1,16 +1,14 @@
-import json
-
-import requests
+import httpx
 
 
-def get_joke():
+async def get_joke() -> str:
     url = "https://api.jokes.one/jod"
 
-    response = requests.request("GET", url)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        data = response.json()
 
-    response = json.loads(response.text)
-
-    title = response["contents"]["jokes"][0]["joke"]["title"]
-    text = response["contents"]["jokes"][0]["joke"]["text"]
+    title = data["contents"]["jokes"][0]["joke"]["title"]
+    text = data["contents"]["jokes"][0]["joke"]["text"]
 
     return f"{title}\n\n{text}\n🤣🤣🤣"
