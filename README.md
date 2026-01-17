@@ -195,6 +195,7 @@ curl "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=${CLOUD_RUN_UR
 
 ## Bot Commands
 
+- `/help` - Show all available commands
 - `/lol` - Get a lol response
 - `/joke` - Get joke of the day
 - `/mountainview` - Get a mountain image
