@@ -13,7 +13,7 @@ The main project folder (<project_root>) can contain the following files:
   * **secrets.py** - Module for reading secrets from Google Cloud Secret Manager.
   * **wispo_storage.py** - Storage module using Google Cloud Firestore.
   * **forecast.py** - Daily weather forecast functionality.
-  * **amy.py** - Various bot command implementations.
+  * **mother_of_all_file.py** - Various bot command implementations.
   * **joke.py** - Joke of the day functionality.
   * **array_extensions.py** - Utility functions.
 

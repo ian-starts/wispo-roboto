@@ -3,7 +3,7 @@ from typing import Callable, Awaitable
 
 import telegram
 
-from app.amy import (
+from app.mother_of_all_file import (
     get_address,
     get_addresshotel,
     get_back,
