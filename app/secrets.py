@@ -10,10 +10,7 @@ if env_path.exists():
 
 SECRET_ID_TO_ENV_VAR = {
     "telegram-api-key": "TELEGRAM_API_KEY",
-    "here-api-key": "HERE_API_KEY",
     "skaping-api-key": "SKAPING_API_KEY",
-    "weather-api-id": "WEATHER_API_ID",
-    "weather-api-key": "WEATHER_API_KEY",
 }
 
 
@@ -49,11 +46,6 @@ def get_secret(secret_id: str) -> str:
 @lru_cache
 def get_telegram_api_key() -> str:
     return get_secret("telegram-api-key")
-
-
-@lru_cache
-def get_here_api_key() -> str:
-    return get_secret("here-api-key")
 
 
 @lru_cache

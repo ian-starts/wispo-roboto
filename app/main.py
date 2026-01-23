@@ -6,10 +6,9 @@ import telegram
 from fastapi import FastAPI, Response
 
 from app.array_extensions import key_exists
-from app.commands import handle_command, command, send_message
+from app.commands import handle_command, command
 from app.forecast import send_daily_forecast
 from app.secrets import get_skaping_api_key, get_telegram_api_key
-from app.wispo_storage import set_location
 
 app = FastAPI()
 
@@ -42,14 +41,6 @@ async def get_mountain_image() -> dict:
 async def message_stuff(request_data: dict[str, Any]) -> Response:
     print(request_data)
     message = get_message_or_update(request_data)
-
-    if key_exists(message, "location"):
-        set_location(
-            message["from"]["id"],
-            message["location"]["latitude"],
-            message["location"]["longitude"],
-        )
-        return Response(status_code=202, media_type=JSON_MEDIA_TYPE)
 
     if not key_exists(message, "text") or not message["text"].startswith("/"):
         return Response(status_code=202, media_type=JSON_MEDIA_TYPE)

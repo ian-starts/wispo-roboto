@@ -11,7 +11,6 @@ from app.amy import (
     get_manly,
     get_name,
     get_rng,
-    get_travel_distance_message,
 )
 from app.joke import get_joke
 
@@ -84,12 +83,6 @@ async def handle_dishes(bot: telegram.Bot, message: dict) -> None:
 async def handle_manly(bot: telegram.Bot, message: dict) -> None:
     size = get_manly()
     await send_message(bot, size, message["chat"]["id"])
-
-
-@command("dist", "Distance to WISPO destination")
-async def handle_dist(bot: telegram.Bot, message: dict) -> None:
-    distance = get_travel_distance_message(message["from"]["id"])
-    await send_message(bot, distance, message["chat"]["id"])
 
 
 @command("addresshotel", "Get the hotel address")

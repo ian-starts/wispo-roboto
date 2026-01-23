@@ -7,9 +7,9 @@ Telegram chatbot for the WISPO group, deployed on Google Cloud Platform.
 - **Framework**: FastAPI
 - **Package Manager**: uv
 - **Deployment**: Google Cloud Run
-- **Storage**: Google Cloud Firestore
 - **Secrets**: Google Cloud Secret Manager
 - **CI/CD**: Google Cloud Build
+- **Weather Data**: [Open-Meteo](https://open-meteo.com/) (free, no API key required)
 
 ## Local Development
 
@@ -46,10 +46,7 @@ The `.env` file supports two modes:
 ```bash
 USE_LOCAL_SECRETS=true
 TELEGRAM_API_KEY=your-telegram-bot-api-key
-HERE_API_KEY=your-here-maps-api-key
 SKAPING_API_KEY=your-skaping-api-key
-WEATHER_API_ID=your-weather-api-id
-WEATHER_API_KEY=your-weather-api-key
 ```
 
 **2. GCP Secret Manager mode** (requires GCP authentication):
@@ -74,24 +71,11 @@ Create the following secrets in Google Cloud Secret Manager:
 # Telegram Bot API Key
 echo -n "your-telegram-api-key" | gcloud secrets create telegram-api-key --data-file=-
 
-# HERE Maps API Key (for distance calculations)
-echo -n "your-here-api-key" | gcloud secrets create here-api-key --data-file=-
-
 # Skaping API Key (for mountain images)
 echo -n "your-skaping-api-key" | gcloud secrets create skaping-api-key --data-file=-
-
-# Weather API credentials (for daily forecasts)
-echo -n "your-weather-api-id" | gcloud secrets create weather-api-id --data-file=-
-echo -n "your-weather-api-key" | gcloud secrets create weather-api-key --data-file=-
 ```
 
-### 2. Create Firestore Database
-
-```bash
-gcloud firestore databases create --location=europe-west1
-```
-
-### 3. Grant Cloud Run Service Account Access
+### 2. Grant Cloud Run Service Account Access
 
 ```bash
 PROJECT_ID=$(gcloud config get-value project)
@@ -103,29 +87,12 @@ gcloud secrets add-iam-policy-binding telegram-api-key \
     --member="serviceAccount:${SERVICE_ACCOUNT}" \
     --role="roles/secretmanager.secretAccessor"
 
-gcloud secrets add-iam-policy-binding here-api-key \
-    --member="serviceAccount:${SERVICE_ACCOUNT}" \
-    --role="roles/secretmanager.secretAccessor"
-
 gcloud secrets add-iam-policy-binding skaping-api-key \
     --member="serviceAccount:${SERVICE_ACCOUNT}" \
     --role="roles/secretmanager.secretAccessor"
-
-gcloud secrets add-iam-policy-binding weather-api-id \
-    --member="serviceAccount:${SERVICE_ACCOUNT}" \
-    --role="roles/secretmanager.secretAccessor"
-
-gcloud secrets add-iam-policy-binding weather-api-key \
-    --member="serviceAccount:${SERVICE_ACCOUNT}" \
-    --role="roles/secretmanager.secretAccessor"
-
-# Grant Firestore access
-gcloud projects add-iam-policy-binding $PROJECT_ID \
-    --member="serviceAccount:${SERVICE_ACCOUNT}" \
-    --role="roles/datastore.user"
 ```
 
-### 4. Deploy to Cloud Run
+### 3. Deploy to Cloud Run
 
 #### Manual Deployment
 
@@ -155,7 +122,7 @@ gcloud projects add-iam-policy-binding $(gcloud config get-value project) \
     --role="roles/iam.serviceAccountUser"
 ```
 
-### 5. Set Up Daily Forecast (Cloud Scheduler)
+### 4. Set Up Daily Forecast (Cloud Scheduler)
 
 To trigger the daily weather forecast at 5:00 AM:
 
@@ -175,7 +142,7 @@ gcloud scheduler jobs create http wispo-daily-forecast \
     --oidc-service-account-email $(gcloud projects describe $(gcloud config get-value project) --format='value(projectNumber)')-compute@developer.gserviceaccount.com
 ```
 
-### 6. Set Up Telegram Webhook
+### 5. Set Up Telegram Webhook
 
 After deploying, set your Telegram bot webhook to point to Cloud Run:
 
@@ -202,7 +169,6 @@ curl "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=${CLOUD_RUN_UR
 - `/rng{number}` - Random number generator (1 to number)
 - `/dishes` - Pick someone to do the dishes
 - `/manly` - Generate a... size indicator
-- `/dist` - Distance to WISPO destination
 - `/address` - Get the WISPO address
 - `/addresshotel` - Get the hotel address
 - `/flip` - Flip a table
