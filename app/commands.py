@@ -9,6 +9,7 @@ from app.mother_of_all_file import (
     get_back,
     get_flip,
     get_manly,
+    get_mansplain,
     get_name,
     get_rng,
 )
@@ -104,6 +105,10 @@ async def handle_flip(bot: telegram.Bot, message: dict) -> None:
 async def handle_back(bot: telegram.Bot, message: dict) -> None:
     await send_message(bot, get_back(), message["chat"]["id"])
 
+
+@command("mansplain", "Get a mansplain")
+async def handle_mansplain(bot: telegram.Bot, message: dict) -> None:
+    await send_message(bot, get_mansplain(), message["chat"]["id"])
 
 async def handle_command(bot: telegram.Bot, message: dict) -> bool:
     text = message.get("text", "")
